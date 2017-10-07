@@ -6,13 +6,14 @@ import com.google.common.util.concurrent.SettableFuture;
 import com.wrapper.spotify.Api;
 import com.wrapper.spotify.methods.authentication.ClientCredentialsGrantRequest;
 import com.wrapper.spotify.models.ClientCredentials;
+import utils.APIKeys;
 
-public class Auth {
+class Auth {
 
-    public static Api getApi() {
+    static Api getApi() {
         Api api = Api.builder()
-                .clientId("4e9c3411c6944468b3aafb346a6f3ea0")
-                .clientSecret("dbdc99ccb72c48ecaa68d4a46284e19c")
+                .clientId(APIKeys.keys.get("spotify_clientID"))
+                .clientSecret(APIKeys.keys.get("spotify_clientSecret"))
                 .build();
 
         final ClientCredentialsGrantRequest request = api.clientCredentialsGrant().build();

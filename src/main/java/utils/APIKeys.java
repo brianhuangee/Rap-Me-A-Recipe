@@ -20,7 +20,7 @@ public class APIKeys {
             List<String> lines = Files.readAllLines(path);
 
             for (String line : lines) {
-                String id = line.substring(0, line.indexOf('/') + 1);
+                String id = line.substring(0, line.indexOf('/'));
                 String key = line.substring(line.indexOf('/') + 1);
                 keys.put(id, key);
             }
