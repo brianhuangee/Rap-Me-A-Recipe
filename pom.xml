@@ -4,19 +4,24 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>hackumbc</groupId>
+    <groupId>therappers</groupId>
     <artifactId>rap_me_a_recipe</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Rap Me A Recipe</name>
-    <description></description>
-    <url></url>
+    <description>Get Amazon Alexa to rap you a recipe.</description>
+    <url>https://github.com/saberchicken/Rap-Me-A-Recipe</url>
 
     <dependencies>
         <dependency>
             <groupId>se.michaelthelin.spotify</groupId>
             <artifactId>spotify-web-api-java</artifactId>
             <version>1.5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.1-jre</version>
         </dependency>
     </dependencies>
 
@@ -40,7 +45,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.kirinpatel.sync.Sync</mainClass>
+                    <mainClass>RapMeARecipe</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -52,16 +57,16 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>sync</id>
+                        <id>rap_me_a_recipe</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                         <configuration>
-                            <finalName>sync</finalName>
+                            <finalName>rap_me_a_recipe</finalName>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.kirinpatel.sync.Sync</mainClass>
+                                    <mainClass>RapMeARecipe</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
