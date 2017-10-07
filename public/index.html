@@ -55,7 +55,8 @@
       <h2>oAuth info</h2>
       <dl class="dl-horizontal">
         <dt>Access token</dt><dd class="text-overflow">{{access_token}}</dd>
-        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}></dd>
+        <dt>Refresh token</dt><dd class="text-overflow">{{refresh_token}}</dd>
+        <dt>device_id</dt><dd class="text-overflow">{{device_id}}</dd>
       </dl>
     </script>
 
@@ -90,7 +91,8 @@
 
         var access_token = params.access_token,
             refresh_token = params.refresh_token,
-            error = params.error;
+            error = params.error,
+            device_id = params.device_id;
 
         if (error) {
           alert('There was an error during the authentication');
@@ -99,7 +101,8 @@
             // render oauth info
             oauthPlaceholder.innerHTML = oauthTemplate({
               access_token: access_token,
-              refresh_token: refresh_token
+              refresh_token: refresh_token,
+              device_id: device_id
             });
 
             $.ajax({
@@ -130,7 +133,8 @@
               access_token = data.access_token;
               oauthPlaceholder.innerHTML = oauthTemplate({
                 access_token: access_token,
-                refresh_token: refresh_token
+                refresh_token: refresh_token,
+                device_id: device_id
               });
             });
           }, false);
