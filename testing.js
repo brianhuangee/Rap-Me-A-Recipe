@@ -19,11 +19,11 @@ module.exports = {
       (function looper(ind) {
         var element = songs[ind];
         console.log(element.id);
-        setTimeout(setSong(element.id), 800);
+        setTimeout(setSong(element.id), 1200);
         seekSong(element.start);
         if (ind < songs.length) setTimeout(function() {
           looper(++ind);
-        }, 1500);
+        }, 2000);
       })(0);
 
     spotifyApi.pause({"device_id": device_id});
