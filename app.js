@@ -22,7 +22,8 @@ app.get('/#', function(req, res) {
 });
 
 app.get('/input', function(req, res) {
-  res.redirect('/#' + JSON.parse(decodeURI(req.query.json)));
+
+  res.redirect('/#' + req.query.json);
 })
 
 console.log('Listening on 8888');
