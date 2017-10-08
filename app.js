@@ -152,13 +152,13 @@ function seekSong(time) {
 function sleep(milliseconds) {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
-app.post('/input', function(req, res) {
+app.post('/input', async (function(req, res) {
   var songs = req.body;
   console.log(json);
   var access_token;
   var device_id;
   await(playAllSongs)
-});
+}));
 
 app.get('/refresh_token', function(req, res) {
 
