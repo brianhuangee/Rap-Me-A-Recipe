@@ -110,7 +110,7 @@ app.get('/callback', function(req, res) {
 });
 function runThis() {
   console.log("running fuck")
-  access_token = "BQDD5fGnbn4tinX9u8oy8pVRtxZE4TINzNoNlQ8rNHy6BK2qvii3n9uRfDWXeOEH-k4eK7HVs-lA4SG0Pn5lrEKZVOk9hEMgTBD5v7rGa6PrCTl8GzsXv8r9ybvbjpcmCfnblzu_Bjkwan4vZEcwR3Y5axdziTiiZhkBi-PdidHgE1Y2Iys2vIG9RwVJSJoeNta-ptYVU8GxyKxwGTOgmntegap4rvhFZlaSEr858RA9BTC-yxddqddn0ESlzy4HZaKeoyexHYMqCPQTm_DP_aTZD6PUK1CRz9BhfFN1dh8LgVZ7Ba-7SnPKqg4u3lHukw";
+  access_token = "BQAm-J0knYOs5AzSetr-ntogkU8JTD3MS33rlXUfMv5qTx0KM-oLPzHfaLJ-YhnccKC3Lk6lL14vlh9LIxQ8D2DTt6rP3Bo1jf5Q_7bYkMsyhsEGuqdBJcpFrJI14BHP12USV4z9C90dk385AZLi_1k_dx-hsPY0c5RKN0GYSby5EFRnTtRQh5reQhi4RJbe1_r5gE67IZUD0s3gm1Xi11QlpljnfFToecLXn4K_nhuepnWwc2M57z3O4kdeeeiM_f1r5EGXNbb8WvJw9TM4Wp4PwWlviveyiKTZfZ48T5Ljp1Of40fiI4Sell7tQsj5sQ";
   device_id = "028544928f36409f9fea78fc410396306b81dc08";
 
   var spotifyApi = new SpotifyWebApi(
