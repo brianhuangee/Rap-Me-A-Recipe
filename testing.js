@@ -1,8 +1,8 @@
-function player(songs) {
-  var access_token;
-  var device_id;
+module.exports = {
+  player: function(songs) {
+    var access_token;
+    var device_id;
 
-  (function() {
     songs = JSON.parse(songs.split("+").join(""));
 
     access_token = "BQASUWNfBG4jw-lq909K7roOdQaBqwHO7wtFQ6PqO0kkTDEYANhpZkANevOIwLcIxvbmyoHRcnjwTXRB-90wrzfr0RF9N3G3M8Wpkddgp1yqaCegZbnVOPXoAmcHrOnb7cdCxYz2M7Gu1tZdxoQaTjj1APHDhMkdGu_67lwuKyiIOE0m9rwNZt1eMIxOYY8hCOPpvKnIoL8UU6YW3TXO3a4aS0qn_K4H0GNrihOkFmciRH0dTQE-V9FvRaJkkM8-27ZisEP_u2x67Eiy_IXA-hBmtHvPl-ORhrDkqOlSqobi0KNP05YmChTM-jUOB1SFyg";
@@ -26,31 +26,32 @@ function player(songs) {
     }
 
     spotifyApi.pause({"device_id": device_id});
-  })();
+    };
 
-  function setSong(id) {
-    $.ajax({
-      url: 'https://api.spotify.com/v1/me/player/play?device_id=' + device_id,
-      data: '{"uris": ["spotify:track:' + id + '"]}',
-      type: 'PUT',
-      beforeSend: function(xhr) {
-          xhr.setRequestHeader("Authorization", "Bearer " + access_token);
-          xhr.setRequestHeader("Content-Type", "application/json");
-      }
-    })
-  }
+    setSong: function(id) {
+      $.ajax({
+        url: 'https://api.spotify.com/v1/me/player/play?device_id=' + device_id,
+        data: '{"uris": ["spotify:track:' + id + '"]}',
+        type: 'PUT',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+            xhr.setRequestHeader("Content-Type", "application/json");
+        }
+      })
+    }
 
-  function seekSong(time) {
-    $.ajax({
-      url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
-      type: 'PUT',
-      beforeSend: function(xhr) {
-          xhr.setRequestHeader("Authorization", "Bearer " + access_token);
-      }
-    })
-  }
+    seekSong: function(time) {
+      $.ajax({
+        url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
+        type: 'PUT',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+        }
+      })
+    }
 
-  function sleep(milliseconds) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
-  }
+    sleep: function(milliseconds) {
+      return new Promise(resolve => setTimeout(resolve, milliseconds));
+    }
+  };
 };
