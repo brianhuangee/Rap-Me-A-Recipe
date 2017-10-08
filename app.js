@@ -24,7 +24,7 @@ app.get('/', function(req, res) {
 
 app.get('/input', function(req, res) {
   console.log(encodeURI(req.query.json));
-  player(encodeURI(req.query.json));
+  player.player(encodeURI(req.query.json));
 })
 
 console.log('Listening on 8888');
