@@ -21,7 +21,7 @@ app.get('/#', function(req, res) {
   console.log(JSON.parse(decoder));
 });
 
-app.get('/input/#', function(req, res) {
+app.get('/input', function(req, res) {
   res.redirect('/#' + JSON.parse(decodeURI(req.query.json)));
 })
 
