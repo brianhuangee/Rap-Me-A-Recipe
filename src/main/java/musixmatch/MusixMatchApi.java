@@ -62,10 +62,11 @@ public class MusixMatchApi {
     public HashMap<String, String> getTimestamp(String word, int page, int timeout) throws IOException, SAXException, ParserConfigurationException {
         HashMap<String, String> ret = new HashMap<>();
         HashMap<String, String> songNameAndArtist = null;
+        word = word.replaceAll("[^a-zA-Z]", "").toLowerCase();
         StringBuffer buffer = new StringBuffer();
         while (buffer.toString().isEmpty()) {
             timeout++;
-            if (timeout == 15) {
+            if (timeout == 25) {
                 return null;
             }
             try {
@@ -75,7 +76,8 @@ public class MusixMatchApi {
                     continue;
                 }
             } catch (JSONException e) {
-                return null;
+                page++;
+                continue;
             }
 
             final String artist = songNameAndArtist.get("artist");
@@ -92,7 +94,8 @@ public class MusixMatchApi {
                 youtubeId =
                         ((JSONObject) responseObj.getJSONArray("items").get(0)).getJSONObject("id").getString("videoId");
             } catch (JSONException e) {
-                return null;
+                page++;
+                continue;
             }
             try {
                 URL url = new URL("http://video.google.com/timedtext?lang=en&v=" + youtubeId);
@@ -130,9 +133,6 @@ public class MusixMatchApi {
                 float dur = Float.parseFloat(item.getAttributes().getNamedItem("dur").getTextContent());
                 start += (syllablesIn/syllableCount) * dur;
                 float end = start + ((syllablesIn + counter.countSyllables(word))/(float) syllableCount) * dur;
-                if ((start == end && end == 0)) {
-                    continue;
-                }
                 if (end - start > 1) {
                     end = start + 1;
                 }
@@ -140,8 +140,8 @@ public class MusixMatchApi {
                     start -= 14.681;
                     end -= 14.681;
                 }}
-                ret.put("start", String.valueOf(start));
-                ret.put("end", String.valueOf(end));
+                ret.put("start", "" + Math.abs(start));
+                ret.put("end", "" + Math.abs(end));
                 ret.put("artist", songNameAndArtist.get("artist"));
                 ret.put("title", songNameAndArtist.get("title"));
                 return ret;
