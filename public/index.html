@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Example of the Authorization Code flow with Spotify</title>
+    <script src="spotify-web-api.js"></script>
+  </head>
+  <body>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.1/handlebars.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script>
+      var access_token;
+      var device_id;
+      (async function() {
+
+        /**
+         * Obtains parameters from the hash of the URL
+         * @return Object
+         */
+        function getHashParams() {
+          var hashParams = {};
+          var e, r = /([^&;=]+)=?([^&;]*)/g,
+              q = window.location.hash.substring(1);
+          while ( e = r.exec(q)) {
+             hashParams[e[1]] = decodeURIComponent(e[2]);
+          }
+          return hashParams;
+        }
+
+        var params = getHashParams();
+
+        var songs = [{
+	"id": "5sra5UY6sD658OabHL3QtI",
+	"start": "166626",
+	"end": "1000"
+}, {
+	"id": "45XhKYRRkyeqoW3teSOkCM",
+	"start": "1000",
+	"end": "0"
+}, {
+	"id": "45XhKYRRkyeqoW3teSOkCM",
+	"start": "1000",
+	"end": "0"
+}, {
+	"id": "2Xqd0wUttjueBfdcltADOv",
+	"start": "12680",
+	"end": "-181"
+}, {
+	"id": "7KXjTSCq5nL1LoYtL7XAwS",
+	"start": "25033",
+	"end": "1000"
+}, {
+	"id": "52IuMfbQa9aqRPz2oYPAI8",
+	"start": "13713",
+	"end": "321"
+}, {
+	"id": "45XhKYRRkyeqoW3teSOkCM",
+	"start": "1000",
+	"end": "0"
+}, {
+	"id": "7KXjTSCq5nL1LoYtL7XAwS",
+	"start": "25033",
+	"end": "1000"
+}, {
+	"id": "7KXjTSCq5nL1LoYtL7XAwS",
+	"start": "10466",
+	"end": "387"
+}, {
+	"id": "4RnfMhMUMqHlrn4V6A3KfS",
+	"start": "26720",
+	"end": "1000"
+}, {
+	"id": "45XhKYRRkyeqoW3teSOkCM",
+	"start": "1000",
+	"end": "0"
+}, {
+	"id": "45XhKYRRkyeqoW3teSOkCM",
+	"start": "1000",
+	"end": "0"
+}, {
+	"id": "5SE57ljOIUJ1ybL9U6CuBH",
+	"start": "90033",
+	"end": "1000"
+}, {
+	"id": "2fQrGHiQOvpL9UgPvtYy6G",
+	"start": "14280",
+	"end": "1000"
+}, {
+	"id": "7KXjTSCq5nL1LoYtL7XAwS",
+	"start": "9066",
+	"end": "390"
+}, {
+	"id": "2c7H254xlKoGhmZT194C0T",
+	"start": "32400",
+	"end": "216"
+}, {
+	"id": "7KXjTSCq5nL1LoYtL7XAwS",
+	"start": "94533",
+	"end": "208"
+}, {
+	"id": "3XVozq1aeqsJwpXrEZrDJ9",
+	"start": "48560",
+	"end": "1000"
+}, {
+	"id": "0pSBuHjILhNEo55xK1zrRt",
+	"start": "65120",
+	"end": "199"
+}, {
+	"id": "6AGON2BGdPmPMJGiiNuuwl",
+	"start": "11940",
+	"end": "172"
+}, {
+	"id": "7KXjTSCq5nL1LoYtL7XAwS",
+	"start": "47100",
+	"end": "433"
+}, {
+	"id": "45XhKYRRkyeqoW3teSOkCM",
+	"start": "1000",
+	"end": "0"
+}];
+
+        access_token = "BQBYOwnjUukQMQPScf4LW9_4uoym7EBgT0Q5snsV9j7iIjvR6BTX6AToNSX3_CA17WUuyu42E-EpdYn4ve7kFXTGympdPTWZbqymuauXlOcBzabpmIq1N25yjh0jz9etOHvDhenLi3q9Wfim4N97Vkdn6ft5g7A8iLcUrOwzVYjyzPvN_QINBsAYuX88vBut5NqILMjRKlSndo5dfAYWr2gJPD4DiOktnxOsJH6mNhUdo-yk0nGXRAp1ozkkxtUyWxvqh0PzYKI7rW0pIXGG2kEgMjASKASI0HI0C_IrYiJJV6kw_3dJwsW3xdlraD-hJg";
+        var refresh_token = params.refresh_token;
+        device_id = params.device_id;
+
+        var spotifyApi = new SpotifyWebApi();
+
+        spotifyApi.setAccessToken(access_token);
+
+        for (var i = 0; i < songs.length; i++) {
+          var element = songs[i];
+          console.log(element.id);
+
+          setSong(element.id)
+          await sleep(800)
+          seekSong(element.start)
+          var timeout = parseInt(element.end) >= 0 ? parseInt(element.end) : 500
+          await sleep(2000 + timeout)
+        }
+
+        spotifyApi.pause({"device_id": device_id});
+      })();
+
+      function setSong(id) {
+        $.ajax({
+          url: 'https://api.spotify.com/v1/me/player/play?device_id=' + device_id,
+          data: '{"uris": ["spotify:track:' + id + '"]}',
+          type: 'PUT',
+          beforeSend: function(xhr) {
+              xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+              xhr.setRequestHeader("Content-Type", "application/json");
+          }
+        })
+      }
+
+      function seekSong(time) {
+        $.ajax({
+          url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
+          type: 'PUT',
+          beforeSend: function(xhr) {
+              xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+          }
+        })
+      }
+
+      function sleep(milliseconds) {
+        return new Promise(resolve => setTimeout(resolve, milliseconds));
+      }
+    </script>
+  </body>
+</html>
