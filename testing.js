@@ -1763,7 +1763,7 @@ module.exports = {
     spotifyApi.pause({"device_id": device_id});
 
     function setSong(id) {
-      xmlhttp = new XMLHttpRequest();
+      var xmlhttp = new XMLHttpRequest();
    xmlhttp.open("PUT","https://api.spotify.com/v1/me/player/play?device_id=" + device_id, true);
    xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
    xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -1771,7 +1771,7 @@ module.exports = {
     }
 
     function seekSong(time) {
-      xmlhttp = new XMLHttpRequest();
+     var xmlhttp = new XMLHttpRequest();
    xmlhttp.open("PUT","https://api.spotify.com/v1/me/player/seek?position_ms=" + time + '&device_id=' + device_id, true);
    xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
    xmlhttp.send();
