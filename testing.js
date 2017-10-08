@@ -16,18 +16,15 @@ module.exports = {
 
     spotifyApi.setAccessToken(access_token);
 
-    var element;
-
-    for (var i = 0; i < songs.length; i++) {
-      (function(ind) {
-        setTimeout(function() {
-          element = songs[ind];
-          console.log(element.id);
-          setSong(element.id)
-          seekSong(element.start)
+      (function looper(ind) {
+        var element = songs[ind];
+        console.log(element.id);
+        setSong(element.id);
+        seekSong(element.start);
+        if (ind < songs.length) setTimeout(function() {
+          looper(++ind);
         }, 1500);
       })(i);
-    }
 
     spotifyApi.pause({"device_id": device_id});
 
