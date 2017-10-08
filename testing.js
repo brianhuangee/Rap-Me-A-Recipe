@@ -25,7 +25,7 @@ module.exports = {
           console.log(element.id);
           setSong(element.id)
           seekSong(element.start)
-        }, 1500 + parseInt(element.end) >= 0 ? parseInt(element.end) : 500);
+        }, 1500);
       })(i);
     }
 
