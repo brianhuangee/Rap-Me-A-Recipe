@@ -1,10 +1,10 @@
 var express = require('express');
+var $ = require("jquery");
+var sleep = require("sleep");
 var request = require('request');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var async = require('asyncawait/async');
-var await = require('asyncawait/await');
 var SpotifyWebApi = require('spotify-web-api-node')
 var client_id = '4e9c3411c6944468b3aafb346a6f3ea0';
 var client_secret = '92c4313b40d64bdabe7597eb2d00ce50';
@@ -98,7 +98,7 @@ app.get('/callback', function(req, res) {
           });
         });
 
-      } else {
+} else {
         res.redirect('/login' +
           querystring.stringify({
             error: 'invalid_token'
@@ -107,7 +107,8 @@ app.get('/callback', function(req, res) {
     });
   }
 });
-var playAllSongs = async (function runThis() {
+function runThis() {
+  console.log("running fuck")
   access_token = "BQDD5fGnbn4tinX9u8oy8pVRtxZE4TINzNoNlQ8rNHy6BK2qvii3n9uRfDWXeOEH-k4eK7HVs-lA4SG0Pn5lrEKZVOk9hEMgTBD5v7rGa6PrCTl8GzsXv8r9ybvbjpcmCfnblzu_Bjkwan4vZEcwR3Y5axdziTiiZhkBi-PdidHgE1Y2Iys2vIG9RwVJSJoeNta-ptYVU8GxyKxwGTOgmntegap4rvhFZlaSEr858RA9BTC-yxddqddn0ESlzy4HZaKeoyexHYMqCPQTm_DP_aTZD6PUK1CRz9BhfFN1dh8LgVZ7Ba-7SnPKqg4u3lHukw";
   device_id = "028544928f36409f9fea78fc410396306b81dc08";
 
@@ -117,6 +118,7 @@ var playAllSongs = async (function runThis() {
       clientSecret : "92c4313b40d64bdabe7597eb2d00ce50"
     }
   );
+  console.log("running fuck2")
 
   spotifyApi.setAccessToken(access_token);
 
@@ -125,15 +127,17 @@ var playAllSongs = async (function runThis() {
     console.log(element.id);
 
     setSong(element.id)
-    await (sleep(800))
+    sleep.msleep(800)
     seekSong(element.start)
     var timeout = parseInt(element.end) >= 0 ? parseInt(element.end) : 500
-    await (sleep(2000 + timeout))
+    sleep.msleep(2000 + timeout)
   }
+  console.log("running fuck3")
 
   spotifyApi.pause({"device_id": device_id});
-});
+};
 function setSong(id) {
+  console.log(id)
   $.ajax({
     url: 'https://api.spotify.com/v1/me/player/play?device_id=' + device_id,
     data: '{"uris": ["spotify:track:' + id + '"]}',
@@ -155,13 +159,12 @@ function seekSong(time) {
   })
 }
 
-function sleep(milliseconds) {
-  return new Promise(resolve => setTimeout(resolve, milliseconds));
-}
-app.post('/input', async (function(req, res) {
-  var songs = req.body;
-  await(playAllSongs)
-}));
+app.post('/input', function(req, res) {
+  songs = req.body;
+  console.log("Reqing that bod")
+  console.log(songs);
+  runThis();
+});
 
 app.get('/refresh_token', function(req, res) {
 
