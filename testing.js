@@ -24,7 +24,7 @@ module.exports = {
         if (ind < songs.length) setTimeout(function() {
           looper(++ind);
         }, 1500);
-      })(i);
+      })(0);
 
     spotifyApi.pause({"device_id": device_id});
 
