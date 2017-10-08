@@ -111,7 +111,7 @@ app.post('/input', function(req, res) {
   console.log(json);
   res.redirect('/#' +
     querystring.stringify({
-      json: json;
+      json: json
     }));
 });
 
