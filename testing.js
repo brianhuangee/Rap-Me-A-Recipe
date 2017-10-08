@@ -1763,7 +1763,7 @@ module.exports = {
 
     spotifyApi.pause({"device_id": device_id});
 
-    function setSlng(id) {
+    function setSong(id) {
       $.ajax({
         url: 'https://api.spotify.com/v1/me/player/play?device_id=' + device_id,
         data: '{"uris": ["spotify:track:' + id + '"]}',
