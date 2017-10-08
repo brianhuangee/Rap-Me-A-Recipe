@@ -110,7 +110,9 @@ app.get('/callback', function(req, res) {
 
 app.post('/input', function(req, res) {
   var curr = new Date().now;
-  if ((curr - prevPost) == 60*1000*3) {
+  console.log((curr - prevPost) === 60*1000*3);
+  if ((curr - prevPost) === 60*1000*3) {
+    console.log("Request DENIED!");
     return;
   }
   prevPost = curr;
