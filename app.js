@@ -14,8 +14,6 @@ var app = express();
 
 var json = "";
 
-var requestIndex = 0;
-
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -109,11 +107,6 @@ app.get('/callback', function(req, res) {
 });
 
 app.post('/input', function(req, res) {
-  requestIndex++;
-  if (requestIndex % 3 != 0) {
-    console.log("Request DENIED!");
-    return;
-  }
   json = req.body;
   console.log(json);
   res.redirect('/#' +
