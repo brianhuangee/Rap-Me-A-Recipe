@@ -2,6 +2,7 @@ var express = require('express');
 var request = require('request');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
 var client_id = '4e9c3411c6944468b3aafb346a6f3ea0';
 var client_secret = '92c4313b40d64bdabe7597eb2d00ce50';
@@ -22,8 +23,7 @@ var generateRandomString = function(length) {
   }
   return text;
 };
-
-app.use(express.static(__dirname + '/public')).use(cookieParser());
+app.use(express.static(__dirname + '/public')).use(cookieParser()).use(bodyParser.json());
 
 app.get('/login', function(req, res) {
 
@@ -107,8 +107,7 @@ app.get('/callback', function(req, res) {
 });
 
 app.post('/input', function(req, res) {
-  console.log(req);
-  console.log(res);
+  console.log(req.body)
 });
 
 app.get('/refresh_token', function(req, res) {
