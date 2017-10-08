@@ -14,6 +14,8 @@ var app = express();
 
 var json = "";
 
+var prevPost = new Date().now;
+
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -107,6 +109,11 @@ app.get('/callback', function(req, res) {
 });
 
 app.post('/input', function(req, res) {
+  var curr = new Date().now;
+  if ((curr - prevPost) == 60*1000*3) {
+    return;
+  }
+  prevPost = curr;
   json = req.body;
   console.log(json);
   res.redirect('/#' +
