@@ -14,7 +14,7 @@ var app = express();
 
 var json = "";
 
-var prevPost = new Date().now;
+var requestIndex = 0;
 
 var generateRandomString = function(length) {
   var text = '';
@@ -109,13 +109,11 @@ app.get('/callback', function(req, res) {
 });
 
 app.post('/input', function(req, res) {
-  var curr = new Date().now;
-  console.log((curr - prevPost) >= 60*1000*3);
-  if ((curr - prevPost) >= 60*1000*3) {
+  requestIndex++;
+  if (requestIndex % 3 != 0) {
     console.log("Request DENIED!");
     return;
   }
-  prevPost = curr;
   json = req.body;
   console.log(json);
   res.redirect('/#' +
