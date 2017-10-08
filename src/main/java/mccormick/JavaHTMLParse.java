@@ -8,21 +8,32 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class Testing {
+
+public class JavaHTMLParse {
 
     public static void main(String[] args) throws Exception {
 
-        Testing http = new Testing();
+        JavaHTMLParse http = new JavaHTMLParse();
 
         System.out.println("Testing 1 - Send Http GET request");
-        http.sendGet();
+        String html = http.sendGet();
+        html = html.substring(html.indexOf("slider js-item-container item-container searched-recipe-container"));
+        //System.out.println(html);
+        //System.out.println(html.indexOf("<div class=\"item-wrapper js-item-wrapper item-square-category\" data-itemid=")+76);
+        html = html.substring(html.indexOf("itemid=")+8);
+        //System.out.println(html);
+        html = html.substring(0,html.indexOf("\""));
+
+        //html = html.replace("-","");
+
+        System.out.println(html);
 
     }
 
     // HTTP GET request
-    private void sendGet() throws Exception {
+    public String sendGet() throws Exception {
 
-        String url = "https://gdt-api.mccormick.com/recipes/EB358165E957438189B2BC075ACAA36A";
+        String url = "https://www.mccormick.com/search?t=lasagna";
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -31,7 +42,7 @@ public class Testing {
         con.setRequestMethod("GET");
 
         //add request header
-        con.setRequestProperty("content-type","application/json");
+        con.setRequestProperty("content-type", "application/json");
         con.setRequestProperty("x-api-key", "");
 
         int responseCode = con.getResponseCode();
@@ -51,11 +62,8 @@ public class Testing {
         in.close();
 
         //print result
-        System.out.println(response.toString());
+
+        return response.toString();
 
     }
-
-
-    /*https://gdt-api.mccormick.com/recipes?page=0&size=2&content-type=application/json&x-api-key=0RiIi36IwU96NTUNhszOS6QzLOaNrKdX67UeEpml*/
-
 }
