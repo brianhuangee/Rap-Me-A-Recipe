@@ -1,6 +1,7 @@
 var SpotifyWebApi = require('spotify-web-api-node');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-var sleep = require('sleep')
+var sleep = require('sleep');
+
 module.exports = {
   player: function(songs) {
     var access_token;
@@ -18,8 +19,6 @@ module.exports = {
     for (var i = 0; i < songs.length; i++) {
       var element = songs[i];
       console.log(element.id);
-      console.log(element.start);
-      console.log(element.end);
 
       setSong(element.id)
       sleep.msleep(800)
@@ -32,6 +31,7 @@ module.exports = {
 
     function setSong(id) {
       var xmlhttp = new XMLHttpRequest();
+      console.log("https://api.spotify.com/v1/me/player/play?device_id=" + device_id);
    xmlhttp.open("PUT","https://api.spotify.com/v1/me/player/play?device_id=" + device_id, true);
    xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
    xmlhttp.setRequestHeader("Content-Type", "application/json");
