@@ -8,7 +8,6 @@ var bodyParser = require('body-parser');
 var SpotifyWebApi = require('spotify-web-api-node')
 var client_id = '4e9c3411c6944468b3aafb346a6f3ea0';
 var client_secret = '92c4313b40d64bdabe7597eb2d00ce50';
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var redirect_uri = 'http://localhost:8888/callback/';
 
 var stateKey = 'spotify_auth_state';
@@ -127,9 +126,9 @@ function runThis() {
     var element = songs[i];
     console.log(element.id);
 
-    setSong(element.id)
+    setSong(element.id, access_token, device_id)
     sleep.msleep(800)
-    seekSong(element.start)
+    seekSong(element.start, access_token, device_id)
     var timeout = parseInt(element.end) >= 0 ? parseInt(element.end) : 500
     sleep.msleep(2000 + timeout)
   }
@@ -137,21 +136,35 @@ function runThis() {
 
   spotifyApi.pause({"device_id": device_id});
 };
-function setSong(id) {
+function setSong(id, access_token, device_id) {
   console.log(id)
-   xmlhttp = new XMLHttpRequest();
-   xmlhttp.open("PUT","https://api.spotify.com/v1/me/player/play?device_id=" + device_id, true);
-   xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
-   xmlhttp.setRequestHeader("Content-Type", "application/json");
-   xmlhttp.send('{"uris": ["spotify:track:' + id + '"]}');
+  var options = {
+    url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
+    headers: {
+      "Content-Type": "application/json"
+      "Authorization": "Bearer " + access_token
+    },
+    method : 'PUT',
+    json: '{"uris": ["spotify:track:' + id + '"]}'
+  };
+  request(options, callbackFunc)
 }
 
-function seekSong(time) {
+function callbackFunc(error, response, body) {
+  console.log(response.statusCode);
+  console.log(response.statusMessage);
+}
+
+function seekSong(time, access_token, device_id) {
   console.log(time)
-   xmlhttp = new XMLHttpRequest();
-   xmlhttp.open("PUT","https://api.spotify.com/v1/me/player/seek?position_ms=" + time + '&device_id=' + device_id, true);
-   xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
-   xmlhttp.send();
+  var options = {
+    url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
+    method: "PUT"
+    headers: {
+      "Authorization": "Bearer " + access_token
+    }
+  }
+  request(options, callbackFunc)
 }
 
 app.post('/input', function(req, res) {
