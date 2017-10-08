@@ -19,7 +19,7 @@ module.exports = {
       (function looper(ind) {
         var element = songs[ind];
         console.log(element.id);
-        setSong(element.id);
+        setTimeout(setSong(element.id), 800);
         seekSong(element.start);
         if (ind < songs.length) setTimeout(function() {
           looper(++ind);
