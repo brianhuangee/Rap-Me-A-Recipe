@@ -1,5 +1,7 @@
 package mccormick;
 
+import utils.APIKeys;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -16,9 +18,6 @@ public class Recipe {
         con.setRequestMethod("GET");
 
         con.setRequestProperty("content-type", "application/json");
-        con.setRequestProperty("x-api-key", "");
-
-        int responseCode = con.getResponseCode();
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -42,9 +41,7 @@ public class Recipe {
         con.setRequestMethod("GET");
 
         con.setRequestProperty("content-type","application/json");
-        con.setRequestProperty("x-api-key", "");
-
-        int responseCode = con.getResponseCode();
+        con.setRequestProperty("x-api-key", APIKeys.keys.get("mccormick"));
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
