@@ -147,7 +147,7 @@ function setSong(id, access_token, device_id) {
     method : 'PUT',
     json: '{"uris": ["spotify:track:' + id + '"]}'
   };
-  request(options, callbackFunc)
+  request(options, callbackFunc(error, response, body))
 }
 
 function callbackFunc(error, response, body) {
@@ -164,7 +164,7 @@ function seekSong(time, access_token, device_id) {
       "Authorization": "Bearer " + access_token
     }
   }
-  request(options, callbackFunc)
+  request(options, callbackFunc(error, response, body))
 }
 
 app.post('/input', function(req, res) {
