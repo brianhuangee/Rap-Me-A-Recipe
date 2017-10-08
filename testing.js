@@ -1762,9 +1762,8 @@ module.exports = {
     }
 
     spotifyApi.pause({"device_id": device_id});
-  },
 
-    setSong: function(id) {
+    function setSlng(id) {
       $.ajax({
         url: 'https://api.spotify.com/v1/me/player/play?device_id=' + device_id,
         data: '{"uris": ["spotify:track:' + id + '"]}',
@@ -1774,9 +1773,9 @@ module.exports = {
             xhr.setRequestHeader("Content-Type", "application/json");
         }
       })
-    },
+    }
 
-    seekSong: function(time) {
+    function seekSong(time) {
       $.ajax({
         url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
         type: 'PUT',
@@ -1784,9 +1783,10 @@ module.exports = {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
         }
       })
-    },
+    }
 
-    sleep: function(milliseconds) {
+    function sleep(milliseconds) {
       return new Promise(resolve => setTimeout(resolve, milliseconds));
     }
+  }
   };
