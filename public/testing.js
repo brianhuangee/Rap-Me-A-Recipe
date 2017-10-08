@@ -3,7 +3,7 @@
   var access_token;
   var device_id;
 
-  (async function() {
+  (function() {
     songs = JSON.parse(songs.split("+").join(""));
 
     access_token = "BQAMdd8zVYoNtZVXkRHGaSUQXygpRh49WNc6TGcT1p-mXQWYWvSNAQXrV8tIuUhAOC65A6xJnvRvLk7Npc5-Tb5dY6b8wmLZ6dUD3DQZzUMI5Jb_4OMmRh7mYngrPDyLHRXPoZl6RcQMbkpSf_2j14V88e_qBaxoYieZyaIg-Ho5bW2R903IjSznCOx02L0Xrk4-p05XKmKeJMEH05pLZBFCqJphqCXcRVTsUgWYi6_S51FeJZKvrhjY3YBmjHoI8vAAKv5eabgkMWQgI51N08PNC5cw2dYLFVHnAiktA4CHqXjs7lVV8UTxqCHUnssiTQ";
@@ -20,10 +20,10 @@
       console.log(element.end);
 
       setSong(element.id)
-      await sleep(800)
+      sleep(800)
       seekSong(element.start)
       var timeout = parseInt(element.end) >= 0 ? parseInt(element.end) : 500
-      await sleep(2000 + timeout)
+      sleep(2000 + timeout)
     }
 
     spotifyApi.pause({"device_id": device_id});
