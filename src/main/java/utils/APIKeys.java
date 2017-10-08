@@ -10,7 +10,17 @@ import java.util.List;
 
 public class APIKeys {
 
-    public static HashMap<String, String> keys = loadKeys();
+    public static HashMap<String, String> keys = loadEnv();
+
+    public static HashMap<String, String> loadEnv() {
+        HashMap<String, String> keys = new HashMap<>();
+        keys.put("mccormick", System.getenv("mccormick"));
+        keys.put("spotify_clientID", System.getenv("spotify_clientID"));
+        keys.put("spotify_clientSecret", System.getenv("spotify_clientSecret"));
+        keys.put("youtube", System.getenv("youtube"));
+        keys.put("musixmatch", System.getenv("musixmatch"));
+        return keys;
+    }
 
     private static HashMap<String, String> loadKeys() {
         HashMap<String, String> keys = new HashMap<>();

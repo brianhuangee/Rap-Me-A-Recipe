@@ -1,5 +1,6 @@
 package mccormick;
 
+
 import utils.APIKeys;
 
 import java.io.BufferedReader;
@@ -10,8 +11,8 @@ import java.net.URL;
 public class Recipe {
 
     public static String getRecipeDetails(String recipeTitle) throws Exception {
+        System.out.println(recipeTitle);
         String url = "https://www.mccormick.com/search?t=" + recipeTitle;
-
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
