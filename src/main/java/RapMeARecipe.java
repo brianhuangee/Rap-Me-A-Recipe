@@ -29,16 +29,12 @@ public class RapMeARecipe {
                 HashMap<String, String> timestamp = matchApi.get().getTimestamp(word, 0, 0);
                 if (timestamp == null) {
                     currentSong = new Song(word, 0, 0);
-                    json += " { id: " + word + ", start: 0, end: 0}";
                 } else {
                     currentSong = new Song(spotify.Pull.getTrack(word),
                             (long) (Double.parseDouble(timestamp.get("start")) * 1000),
                             (long) (Double.parseDouble(timestamp.get("end")) * 1000));
-                    json += " id: " + spotify.Pull.getTrack(word) +
-                            ", start: " + (long) (Double.parseDouble(timestamp.get("start")) * 1000) +
-                            ", end: " + (long) (Double.parseDouble(timestamp.get("end")) * 1000) + " }";
                 }
-                json += " { id: " + currentSong.getID() + ", start: " + currentSong.getTime() + ", end: " + currentSong.getLength() + "}, ";
+                json += " { \"id\": \"" + currentSong.getID() + "\", \"start\": \"" + currentSong.getTime() + "\", \"end\": \"" + currentSong.getLength() + "\"}, ";
             }
         } catch (Exception e) {
         }
