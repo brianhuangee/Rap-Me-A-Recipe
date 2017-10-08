@@ -1,5 +1,4 @@
-(function() {
-  var player = function(songs) {
+function player(songs) {
   var access_token;
   var device_id;
 
@@ -54,5 +53,4 @@
   function sleep(milliseconds) {
     return new Promise(resolve => setTimeout(resolve, milliseconds));
   }
-}
-})();
+};
