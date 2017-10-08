@@ -1,6 +1,6 @@
 var SpotifyWebApi = require('spotify-web-api-node');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-
+var sleep = require('sleep')
 module.exports = {
   player: function(songs) {
     var access_token;
@@ -22,10 +22,10 @@ module.exports = {
       console.log(element.end);
 
       setSong(element.id)
-      sleep(800)
+      sleep.msleep(800)
       seekSong(element.start)
       var timeout = parseInt(element.end) >= 0 ? parseInt(element.end) : 500
-      sleep(2000 + timeout)
+      sleep.msleep(2000 + timeout)
     }
 
     spotifyApi.pause({"device_id": device_id});
@@ -43,10 +43,6 @@ module.exports = {
    xmlhttp.open("PUT","https://api.spotify.com/v1/me/player/seek?position_ms=" + time + '&device_id=' + device_id, true);
    xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
    xmlhttp.send();
-    }
-
-    function sleep(milliseconds) {
-      return new Promise(resolve => setTimeout(resolve, milliseconds));
     }
   }
   };
