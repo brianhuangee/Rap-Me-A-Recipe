@@ -21,10 +21,10 @@ module.exports = {
       console.log(element.id);
 
       setSong(element.id)
-      sleep.msleep(800)
+      // sleep.msleep(800)
       seekSong(element.start)
       var timeout = parseInt(element.end) >= 0 ? parseInt(element.end) : 500
-      sleep.msleep(2000 + timeout)
+      // sleep.msleep(2000 + timeout)
     }
 
     spotifyApi.pause({"device_id": device_id});
