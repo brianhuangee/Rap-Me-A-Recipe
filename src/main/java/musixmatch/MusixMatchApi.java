@@ -69,6 +69,11 @@ public class MusixMatchApi {
             }
             try {
                 songNameAndArtist = searchLyricWord(word, page);
+                if (songNameAndArtist.get("title").equals("rockstar") || songNameAndArtist.get("title").equals("Bodak Yellow")) {
+                    System.out.println("post");
+                    page++;
+                    continue;
+                }
             } catch (JSONException e) {
                 return null;
             }
@@ -91,6 +96,7 @@ public class MusixMatchApi {
             }
             try {
                 URL url = new URL("http://video.google.com/timedtext?lang=en&v=" + youtubeId);
+                System.out.println(youtubeId);
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
                 String str;
                 while ((str = in.readLine()) != null) {
@@ -131,6 +137,11 @@ public class MusixMatchApi {
                 if (end - start > 1) {
                     end = start + 1;
                 }
+                if (songNameAndArtist.get("title").equals("No Limit")) {{
+                    start -= 14.681;
+                    end -= 14.681;
+                    System.out.println("G-ezy");
+                }}
                 ret.put("start", String.valueOf(start));
                 ret.put("end", String.valueOf(end));
                 ret.put("artist", songNameAndArtist.get("artist"));
