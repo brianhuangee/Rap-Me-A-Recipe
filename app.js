@@ -138,25 +138,19 @@ function runThis() {
 };
 function setSong(id) {
   console.log(id)
-  $.ajax({
-    url: 'https://api.spotify.com/v1/me/player/play?device_id=' + device_id,
-    data: '{"uris": ["spotify:track:' + id + '"]}',
-    type: 'PUT',
-    beforeSend: function(xhr) {
-        xhr.setRequestHeader("Authorization", "Bearer " + access_token);
-        xhr.setRequestHeader("Content-Type", "application/json");
-    }
-  })
+   xmlhttp = new XMLHttpRequest();
+   xmlhttp.open("PUT","https://api.spotify.com/v1/me/player/play?device_id=" + device_id, true);
+   xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
+   xmlhttp.setRequestHeader("Content-Type", "application/json");
+   xmlhttp.send('{"uris": ["spotify:track:' + id + '"]}');
 }
 
 function seekSong(time) {
-  $.ajax({
-    url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
-    type: 'PUT',
-    beforeSend: function(xhr) {
-        xhr.setRequestHeader("Authorization", "Bearer " + access_token);
-    }
-  })
+  console.log(time)
+   xmlhttp = new XMLHttpRequest();
+   xmlhttp.open("PUT","https://api.spotify.com/v1/me/player/seek?position_ms=" + time + '&device_id=' + device_id, true);
+   xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
+   xmlhttp.send();
 }
 
 app.post('/input', function(req, res) {
