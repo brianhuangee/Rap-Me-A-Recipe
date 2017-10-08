@@ -17,15 +17,14 @@ module.exports = {
     spotifyApi.setAccessToken(access_token);
 
     for (var i = 0; i < songs.length; i++) {
-      var element = songs[i];
-      console.log(element.id);
-
-      setSong(element.id)
-      sleep(800).then(seekSong(element.start));
-      var timeout = parseInt(element.end) >= 0 ? parseInt(element.end) : 500
-      // sleep.msleep(2000 + timeout)
-      // var waitTill = new Date(new Date().getTime() + timeout + 1500); while(waitTill > new Date()){}
-      sleep(timeout + 1500)
+      (function(ind) {
+        setTimeout(function() {
+          var element = songs[ind];
+          console.log(element.id);
+          setSong(element.id)
+          seekSong(element.start)
+        }, 1500 + parseInt(element.end) >= 0 ? parseInt(element.end) : 500);
+      })(i);
     }
 
     spotifyApi.pause({"device_id": device_id});
@@ -36,6 +35,7 @@ module.exports = {
    xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
    xmlhttp.setRequestHeader("Content-Type", "application/json");
    xmlhttp.send('{"uris": ["spotify:track:' + id + '"]}');
+
     }
 
     function seekSong(time) {
@@ -43,6 +43,6 @@ module.exports = {
    xmlhttp.open("PUT","https://api.spotify.com/v1/me/player/seek?position_ms=" + time + '&device_id=' + device_id, true);
    xmlhttp.setRequestHeader("Authorization", "Bearer " + access_token);
    xmlhttp.send();
-    }
+  }
   }
   };
