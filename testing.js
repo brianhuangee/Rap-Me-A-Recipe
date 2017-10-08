@@ -6,7 +6,7 @@
   (function() {
     songs = JSON.parse(songs.split("+").join(""));
 
-    access_token = "BQAMdd8zVYoNtZVXkRHGaSUQXygpRh49WNc6TGcT1p-mXQWYWvSNAQXrV8tIuUhAOC65A6xJnvRvLk7Npc5-Tb5dY6b8wmLZ6dUD3DQZzUMI5Jb_4OMmRh7mYngrPDyLHRXPoZl6RcQMbkpSf_2j14V88e_qBaxoYieZyaIg-Ho5bW2R903IjSznCOx02L0Xrk4-p05XKmKeJMEH05pLZBFCqJphqCXcRVTsUgWYi6_S51FeJZKvrhjY3YBmjHoI8vAAKv5eabgkMWQgI51N08PNC5cw2dYLFVHnAiktA4CHqXjs7lVV8UTxqCHUnssiTQ";
+    access_token = "BQASUWNfBG4jw-lq909K7roOdQaBqwHO7wtFQ6PqO0kkTDEYANhpZkANevOIwLcIxvbmyoHRcnjwTXRB-90wrzfr0RF9N3G3M8Wpkddgp1yqaCegZbnVOPXoAmcHrOnb7cdCxYz2M7Gu1tZdxoQaTjj1APHDhMkdGu_67lwuKyiIOE0m9rwNZt1eMIxOYY8hCOPpvKnIoL8UU6YW3TXO3a4aS0qn_K4H0GNrihOkFmciRH0dTQE-V9FvRaJkkM8-27ZisEP_u2x67Eiy_IXA-hBmtHvPl-ORhrDkqOlSqobi0KNP05YmChTM-jUOB1SFyg";
     device_id = "028544928f36409f9fea78fc410396306b81dc08";
 
     var spotifyApi = new SpotifyWebApi();
