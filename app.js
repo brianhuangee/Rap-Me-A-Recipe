@@ -141,7 +141,7 @@ function setSong(id, access_token, device_id) {
   var options = {
     url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
       "Authorization": "Bearer " + access_token
     },
     method : 'PUT',
@@ -159,7 +159,7 @@ function seekSong(time, access_token, device_id) {
   console.log(time)
   var options = {
     url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
-    method: "PUT"
+    method: "PUT",
     headers: {
       "Authorization": "Bearer " + access_token
     }
