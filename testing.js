@@ -21,10 +21,11 @@ module.exports = {
       console.log(element.id);
 
       setSong(element.id)
-      // sleep.msleep(800)
+      var waitTill = new Date(new Date().getTime() + 800); while(waitTill > new Date()){}
       seekSong(element.start)
       var timeout = parseInt(element.end) >= 0 ? parseInt(element.end) : 500
       // sleep.msleep(2000 + timeout)
+      var waitTill = new Date(new Date().getTime() + timeout + 1500); while(waitTill > new Date()){}
     }
 
     spotifyApi.pause({"device_id": device_id});
