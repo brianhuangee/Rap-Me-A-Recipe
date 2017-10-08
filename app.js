@@ -22,7 +22,7 @@ app.get('/#', function(req, res) {
 });
 
 app.get('/input', function(req, res) {
-  res.redirect('/#' + encodeURI(req.query.json));
+  res.redirect('/#json=' + encodeURI(req.query.json));
 })
 
 console.log('Listening on 8888');
