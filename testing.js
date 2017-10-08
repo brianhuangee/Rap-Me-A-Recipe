@@ -1733,6 +1733,8 @@ if (typeof module === 'object' && typeof module.exports === 'object') {
   module.exports = SpotifyWebApi;
 }
 
+var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+
 module.exports = {
   player: function(songs) {
     var access_token;
