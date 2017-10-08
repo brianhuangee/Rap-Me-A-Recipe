@@ -1,26 +1,26 @@
 package spotify;
 
 import com.wrapper.spotify.Api;
+import com.wrapper.spotify.exceptions.WebApiException;
+import com.wrapper.spotify.methods.PlaylistRequest;
 import com.wrapper.spotify.methods.TrackSearchRequest;
+import com.wrapper.spotify.methods.UserPlaylistsRequest;
 import com.wrapper.spotify.models.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Pull {
 
-    public static void pull() {
-        Api api = Auth.getApi();
+    public static final Api API = Auth.getApi();
 
-        TrackSearchRequest request = api.searchTracks("Starboy").build();
+    public static Track getTrack(String title) {
+        TrackSearchRequest request = API.searchTracks(title).build();
 
         try {
-            List<Track> tracks = request.get().getItems();
-            for (Track track : tracks) {
-                System.out.println(track.getName() + " : " + track.getDuration());
-            }
-
+           return request.get().getItems().get(0);
         } catch (Exception e) {
-            System.out.println("Could not get albums.");
+            return null;
         }
     }
 }

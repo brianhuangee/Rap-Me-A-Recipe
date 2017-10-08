@@ -23,9 +23,6 @@ class Auth {
         Futures.addCallback(responseFuture, new FutureCallback<ClientCredentials>() {
             @Override
             public void onSuccess(ClientCredentials clientCredentials) {
-                System.out.println("Successfully retrieved an access token! " + clientCredentials.getAccessToken());
-                System.out.println("The access token expires in " + clientCredentials.getExpiresIn() + " seconds");
-
                 api.setAccessToken(clientCredentials.getAccessToken());
             }
 

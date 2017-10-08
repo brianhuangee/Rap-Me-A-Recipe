@@ -43,6 +43,7 @@ public class MusixMatchApi {
         } catch (IOException ignored) {}
         return buffer.toString();
     }
+
     private HashMap<String, String> searchLyricWord(String word, int page) throws UnsupportedEncodingException {
         final String request = SEARCH_METHOD + API_KEY_PARAM + MUSIX_API_KEY + "&q_lyrics=" + URLEncoder.encode(word, "UTF-8") +
                 "&f_music_genre_id=18&s_track_rating=desc&page=" + page + "&page_size=1";
