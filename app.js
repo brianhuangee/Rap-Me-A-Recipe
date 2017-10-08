@@ -21,5 +21,12 @@ app.get('/#', function(req, res) {
   console.log(JSON.parse(decoder));
 });
 
+app.get('/input/#', function(req, res) {
+  res.redirect('/#' +
+    querystring.stringify({
+      json: JSON.parse(decodeURI(req.query.json))
+    }))
+})
+
 console.log('Listening on 8888');
 app.listen(8888);
