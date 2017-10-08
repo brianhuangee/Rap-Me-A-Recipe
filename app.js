@@ -107,12 +107,73 @@ app.get('/callback', function(req, res) {
 });
 
 app.post('/input', function(req, res) {
-  json = req.body;
+  var songs = req.body;
   console.log(json);
-  res.redirect(307, '/#' +
-    querystring.stringify({
-      json: json
-    }));
+  var access_token;
+  var device_id;
+  (async function() {
+
+    /**
+     * Obtains parameters from the hash of the URL
+     * @return Object
+     */
+    function getHashParams() {
+      var hashParams = {};
+      var e, r = /([^&;=]+)=?([^&;]*)/g,
+          q = window.location.hash.substring(1);
+      while ( e = r.exec(q)) {
+         hashParams[e[1]] = decodeURIComponent(e[2]);
+      }
+      return hashParams;
+    }
+
+    var params = getHashParams();
+    access_token = "BQDD5fGnbn4tinX9u8oy8pVRtxZE4TINzNoNlQ8rNHy6BK2qvii3n9uRfDWXeOEH-k4eK7HVs-lA4SG0Pn5lrEKZVOk9hEMgTBD5v7rGa6PrCTl8GzsXv8r9ybvbjpcmCfnblzu_Bjkwan4vZEcwR3Y5axdziTiiZhkBi-PdidHgE1Y2Iys2vIG9RwVJSJoeNta-ptYVU8GxyKxwGTOgmntegap4rvhFZlaSEr858RA9BTC-yxddqddn0ESlzy4HZaKeoyexHYMqCPQTm_DP_aTZD6PUK1CRz9BhfFN1dh8LgVZ7Ba-7SnPKqg4u3lHukw";
+    device_id = "028544928f36409f9fea78fc410396306b81dc08";
+
+    var spotifyApi = new SpotifyWebApi();
+
+    spotifyApi.setAccessToken(access_token);
+
+    for (var i = 0; i < songs.length; i++) {
+      var element = songs[i];
+      console.log(element.id);
+
+      setSong(element.id)
+      await sleep(800)
+      seekSong(element.start)
+      var timeout = parseInt(element.end) >= 0 ? parseInt(element.end) : 500
+      await sleep(2000 + timeout)
+    }
+
+    spotifyApi.pause({"device_id": device_id});
+  })();
+
+  function setSong(id) {
+    $.ajax({
+      url: 'https://api.spotify.com/v1/me/player/play?device_id=' + device_id,
+      data: '{"uris": ["spotify:track:' + id + '"]}',
+      type: 'PUT',
+      beforeSend: function(xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+          xhr.setRequestHeader("Content-Type", "application/json");
+      }
+    })
+  }
+
+  function seekSong(time) {
+    $.ajax({
+      url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
+      type: 'PUT',
+      beforeSend: function(xhr) {
+          xhr.setRequestHeader("Authorization", "Bearer " + access_token);
+      }
+    })
+  }
+
+  function sleep(milliseconds) {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+  }
 });
 
 app.get('/refresh_token', function(req, res) {
