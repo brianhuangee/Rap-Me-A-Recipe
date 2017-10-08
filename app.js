@@ -109,7 +109,7 @@ app.get('/callback', function(req, res) {
 app.post('/input', function(req, res) {
   json = req.body;
   console.log(json);
-  res.redirect('/#' +
+  res.redirect(307, '/#' +
     querystring.stringify({
       json: json
     }));
