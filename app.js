@@ -14,6 +14,11 @@ var app = express();
 
 var s = new Spotify();
 
+var access_token;
+var refresh_token;
+var user_id;
+var device_id;
+
 var generateRandomString = function(length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -27,7 +32,6 @@ var generateRandomString = function(length) {
 app.use(express.static(__dirname + '/public')).use(cookieParser());
 
 app.get('/login', function(req, res) {
-
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -70,38 +74,9 @@ app.get('/callback', function(req, res) {
 
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
-
-        var activeDevice;
-
-        var options = {
-          url: 'https://api.spotify.com/v1/me/player/devices',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
-
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
-          body.devices.forEach(function(element) {
-            if (element.is_active == true) {
-              activeDevice = element;
-              res.redirect('/#' +
-                querystring.stringify({
-                  access_token: access_token,
-                  refresh_token: refresh_token,
-                  device_id: activeDevice.id
-                }));
-            } else {res.redirect('/#' +
-              querystring.stringify({
-                access_token: access_token,
-                refresh_token: refresh_token
-              }));
-            }
-          });
-
-        });
-
+        access_token = body.access_token;
+        refresh_token = body.refresh_token;
+        res.redirect('/user');
       } else {
         res.redirect('/#' +
           querystring.stringify({
@@ -113,7 +88,6 @@ app.get('/callback', function(req, res) {
 });
 
 app.get('/refresh_token', function(req, res) {
-
   // requesting access token from refresh token
   var refresh_token = req.query.refresh_token;
   var authOptions = {
@@ -133,6 +107,77 @@ app.get('/refresh_token', function(req, res) {
         'access_token': access_token
       });
     }
+  });
+});
+
+app.get('/user', function(ref, res) {
+  var options = {
+    url: 'https://api.spotify.com/v1/me',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
+  };
+
+  request.get(options, function(error, response, body) {
+    user_id = body.id;
+    res.redirect('/devices');
+  });
+});
+
+app.get('/devices', function(ref, res) {
+  var activeDevice;
+
+  var options = {
+    url: 'https://api.spotify.com/v1/me/player/devices',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
+  };
+
+  request.get(options, function(error, response, body) {
+    if (body) {
+      body.devices.forEach(function(element) {
+        if (element.is_active == true) {
+          activeDevice = element;
+          device_id = element.id;
+          res.redirect('/playlist');
+        } else {
+          res.redirect('/#' +
+            querystring.stringify({
+              access_token: access_token,
+              refresh_token: refresh_token
+            }));
+        }
+      });
+    } else {
+      res.redirect('/');
+    }
+  });
+});
+
+app.get('/playlist', function(ref, res) {
+  var playlist;
+
+  var options = {
+    url: 'https://api.spotify.com/v1/users/' + user_id + '/playlists',
+    headers: { 'Authorization': 'Bearer ' + access_token },
+    json: true
+  };
+
+  request.get(options, function(error, response, body) {
+    var playlist_id = "";
+    body.items.forEach(function(element) {
+      if (element.name === 'Rap Me A Recipe') {
+        playlist_id = element.id;
+      }
+    });
+
+    res.redirect('/play/#' +
+      querystring.stringify({
+        access_token: access_token,
+        refresh_token: refresh_token,
+        user_id: user_id,
+        device_id: device_id,
+        playlist_id: playlist_id
+      }));
   });
 });
 
