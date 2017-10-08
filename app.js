@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
+var SpotifyWebApi = require('spotify-web-api-node')
 var client_id = '4e9c3411c6944468b3aafb346a6f3ea0';
 var client_secret = '92c4313b40d64bdabe7597eb2d00ce50';
 var redirect_uri = 'http://localhost:8888/callback/';
@@ -13,7 +14,7 @@ var stateKey = 'spotify_auth_state';
 
 var app = express();
 
-var json = "";
+var songs = "";
 
 var generateRandomString = function(length) {
   var text = '';
@@ -110,7 +111,12 @@ var playAllSongs = async (function runThis() {
   access_token = "BQDD5fGnbn4tinX9u8oy8pVRtxZE4TINzNoNlQ8rNHy6BK2qvii3n9uRfDWXeOEH-k4eK7HVs-lA4SG0Pn5lrEKZVOk9hEMgTBD5v7rGa6PrCTl8GzsXv8r9ybvbjpcmCfnblzu_Bjkwan4vZEcwR3Y5axdziTiiZhkBi-PdidHgE1Y2Iys2vIG9RwVJSJoeNta-ptYVU8GxyKxwGTOgmntegap4rvhFZlaSEr858RA9BTC-yxddqddn0ESlzy4HZaKeoyexHYMqCPQTm_DP_aTZD6PUK1CRz9BhfFN1dh8LgVZ7Ba-7SnPKqg4u3lHukw";
   device_id = "028544928f36409f9fea78fc410396306b81dc08";
 
-  var spotifyApi = new SpotifyWebApi();
+  var spotifyApi = new SpotifyWebApi(
+    {
+      clientId : "4e9c3411c6944468b3aafb346a6f3ea0",
+      clientSecret : "92c4313b40d64bdabe7597eb2d00ce50"
+    }
+  );
 
   spotifyApi.setAccessToken(access_token);
 
@@ -154,9 +160,6 @@ function sleep(milliseconds) {
 }
 app.post('/input', async (function(req, res) {
   var songs = req.body;
-  console.log(json);
-  var access_token;
-  var device_id;
   await(playAllSongs)
 }));
 
