@@ -9,7 +9,7 @@ module.exports = {
 
     songs = JSON.parse(decodeURI(songs.split("+").join("")));
 
-    access_token = "BQBmQ3DiSysJuEvYdVfcwR5zCkP9IAnKNMBW3wBlalfYP-e9VTWlSH-u7rPYA8xgb6U1xM3OQQQQuSYrWMZVAgUsQYk38kE3sPDU-WuBu28oTkYc4nqA0PQS8_pd_y65kUSo0hCiYq_pv_xprkWJhuOI8v3GTRJNiaQj514wJ6QilWe5CShIfqzRQUl149C6bvFsNrwt0LlZK37aDC6oWRm2PGQAYqSPU_-xXgKJLfHjbOU0f2CAbvkm0FkfG_8izzVMxvYjhOqg1EFPshO8aXh3vHZ1SWkdsBjAP2IXvQyMwQvUoDrYbOZjFsFlGIuOnQ";
+    access_token = "BQAe6GY3A-ygdMkAJESqVun2G6GRVAgn5clSiX3fuov5IEQkAf9VVRfq9f8rD-JIVTK4nCFjpfWU46SNFXThUNVXH0wAIeIJ3Dh9nINV5tfAOWmA8mvSnK6wL6_XuGNuju0fzYL7iWupaz4znLZr1WwG-xo5uvlUHIMN4iIKF_8xL6yX3P7r67D8U9UZLZBFXlnVnCKfXlYt2fstT0wf4sC-D9s8BW9V-M6Ru-M4Zt8tHbRmD-SJr9MsCA64kxGlLO_N5iKlwBVSzCBWOZGu-uue0hdKS8eCsO4Ky_2YHuqNVVYvQvZL05sGnxAGHoUtHw";
     device_id = "028544928f36409f9fea78fc410396306b81dc08";
 
     var spotifyApi = new SpotifyWebApi();
