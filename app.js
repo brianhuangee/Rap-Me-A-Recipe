@@ -174,6 +174,16 @@ app.post('/input', function(req, res) {
   runThis();
 });
 
+app.get('/input', function(req, res) {
+  var decoder = decodeURI(req.query.json);
+  console.log(decoder);
+  console.log(JSON.parse(decoder));
+  res.redirect('/#' +
+    querystring.stringify({
+      json: JSON.parse(decoder)
+    }));
+});
+
 app.get('/refresh_token', function(req, res) {
 
   // requesting access token from refresh token
