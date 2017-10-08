@@ -2,6 +2,7 @@ var express = require('express');
 var $ = require("jquery");
 var sleep = require("sleep");
 var request = require('request');
+var http = require('http');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -139,15 +140,14 @@ function runThis() {
 function setSong(id, access_token, device_id) {
   console.log(id)
   var options = {
-    url: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
+    uri: "https://api.spotify.com/v1/me/player/play?device_id=" + device_id,
     headers: {
       "Content-Type": "application/json",
       "Authorization": "Bearer " + access_token
     },
-    method : 'PUT',
-    json: '{"uris": ["spotify:track:' + id + '"]}'
+    method : 'PUT'
   };
-  request(options, callbackFunc(error, response, body))
+  http.request(options, callbackFunc).write('{"uris": ["spotify:track:' + id + '"]}')
 }
 
 function callbackFunc(error, response, body) {
@@ -158,13 +158,13 @@ function callbackFunc(error, response, body) {
 function seekSong(time, access_token, device_id) {
   console.log(time)
   var options = {
-    url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
+    uri: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + time + '&device_id=' + device_id,
     method: "PUT",
     headers: {
       "Authorization": "Bearer " + access_token
     }
   }
-  request(options, callbackFunc(error, response, body))
+  http.request(options, callbackFunc).write()
 }
 
 app.post('/input', function(req, res) {
