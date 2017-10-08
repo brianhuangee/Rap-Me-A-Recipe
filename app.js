@@ -97,7 +97,7 @@ app.get('/callback', function(req, res) {
         });
 
       } else {
-        res.redirect('/#' +
+        res.redirect('/login' +
           querystring.stringify({
             error: 'invalid_token'
           }));
@@ -107,7 +107,12 @@ app.get('/callback', function(req, res) {
 });
 
 app.post('/input', function(req, res) {
-  console.log(req.body)
+  json = req.body;
+  console.log(json);
+  res.redirect('/#' +
+    querystring.stringify({
+      json: json;
+    }));
 });
 
 app.get('/refresh_token', function(req, res) {
