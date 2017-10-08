@@ -16,10 +16,12 @@ module.exports = {
 
     spotifyApi.setAccessToken(access_token);
 
+    var element;
+
     for (var i = 0; i < songs.length; i++) {
       (function(ind) {
         setTimeout(function() {
-          var element = songs[ind];
+          element = songs[ind];
           console.log(element.id);
           setSong(element.id)
           seekSong(element.start)
