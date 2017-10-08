@@ -24,8 +24,7 @@
       (async function() {
         var params = getHashParams();
 
-        console.log(params)
-        console.log(params.json)
+        console.log(params.json.split("+").join(""))
 
         var songs = params.json.split("+").join("");
 
