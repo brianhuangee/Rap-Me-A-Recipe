@@ -26,7 +26,7 @@ module.exports = {
     }
 
     spotifyApi.pause({"device_id": device_id});
-    };
+  },
 
     setSong: function(id) {
       $.ajax({
@@ -38,7 +38,7 @@ module.exports = {
             xhr.setRequestHeader("Content-Type", "application/json");
         }
       })
-    }
+    },
 
     seekSong: function(time) {
       $.ajax({
@@ -48,10 +48,10 @@ module.exports = {
             xhr.setRequestHeader("Authorization", "Bearer " + access_token);
         }
       })
-    }
+    },
 
     sleep: function(milliseconds) {
       return new Promise(resolve => setTimeout(resolve, milliseconds));
     }
-  };
+  }
 };
