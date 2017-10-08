@@ -9,8 +9,8 @@ import java.net.URL;
 
 public class Recipe {
 
-    public String getRecipeDetails() throws Exception {
-        String url = "https://www.mccormick.com/search?t=lasagna";
+    public static String getRecipeDetails(String recipeTitle) throws Exception {
+        String url = "https://www.mccormick.com/search?t=" + recipeTitle;
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -29,10 +29,15 @@ public class Recipe {
         }
         in.close();
 
-        return getRecipe(response.toString());
+        String html = response.toString();
+        html = html.substring(html.indexOf("slider js-item-container item-container searched-recipe-container"));
+        html = html.substring(html.indexOf("itemid=")+8);
+        html = html.substring(0,html.indexOf("\""));
+
+        return getRecipe(html);
     }
 
-    private String getRecipe(String recipeid) throws Exception {
+    private static String getRecipe(String recipeid) throws Exception {
         String url = "https://gdt-api.mccormick.com/recipes/" + recipeid;
 
         URL obj = new URL(url);
@@ -53,6 +58,6 @@ public class Recipe {
         }
         in.close();
 
-        return response.toString();
+        return response.toString().substring(response.toString().indexOf("\":{\"") + 2, response.toString().length() - 1);
     }
 }
